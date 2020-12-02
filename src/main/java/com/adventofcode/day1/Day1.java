@@ -1,15 +1,14 @@
 package com.adventofcode.day1;
 
-import java.nio.file.Paths;
+import com.adventofcode.tools.InputLoader;
 import java.util.List;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 public class Day1 {
 
-  public static void main(String[] args) throws Exception {
-    ArgumentsFinder finder = new ArgumentsFinder(
-        Paths.get(Day1.class.getClassLoader().getResource("day1/input.txt").toURI()));
+  public static void main(String[] args) {
+    ArgumentsFinder finder = new ArgumentsFinder(InputLoader.resourcePath("day1/input.txt"));
 
     List<Integer> arguments2 = finder.findSumOfTwoArguments(2020);
     log.info(arguments2);
