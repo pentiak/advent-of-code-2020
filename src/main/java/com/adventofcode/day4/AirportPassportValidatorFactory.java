@@ -1,11 +1,12 @@
 package com.adventofcode.day4;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AirportPassportValidatorFactory {

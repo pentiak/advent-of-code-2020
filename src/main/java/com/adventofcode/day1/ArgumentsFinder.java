@@ -1,10 +1,11 @@
 package com.adventofcode.day1;
 
+import lombok.extern.log4j.Log4j2;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 public class ArgumentsFinder {

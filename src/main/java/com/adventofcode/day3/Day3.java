@@ -1,8 +1,9 @@
 package com.adventofcode.day3;
 
 import com.adventofcode.tools.InputLoader;
-import java.util.List;
 import lombok.extern.log4j.Log4j2;
+
+import java.util.List;
 
 @Log4j2
 public class Day3 {
