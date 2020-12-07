@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -14,13 +15,14 @@ import java.util.stream.Stream;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class InputLoader {
 
+  private static final String READ_FAILED = "Can't read file: ";
   private static final Pattern INPUT_SPLIT = Pattern.compile("\\n\\n");
 
   public static Path resourcePath(String filePath) {
     try {
       return Paths.get(Objects.requireNonNull(InputLoader.class.getClassLoader().getResource(filePath)).toURI());
     } catch (Exception e) {
-      throw new IllegalArgumentException("Invalid filePath: " + filePath);
+      throw new IllegalArgumentException("Invalid filePath: " + filePath, e);
     }
   }
 
@@ -28,7 +30,23 @@ public class InputLoader {
     try {
       return INPUT_SPLIT.splitAsStream(Files.readString(resourcePath(filePath)));
     } catch (IOException e) {
-      throw new IllegalArgumentException("Can't read file: " + filePath);
+      throw new IllegalArgumentException(READ_FAILED + filePath, e);
+    }
+  }
+
+  public static Stream<String> inputLines(String filePath) {
+    try {
+      return Files.lines(resourcePath(filePath));
+    } catch (IOException e) {
+      throw new IllegalArgumentException(READ_FAILED + filePath, e);
+    }
+  }
+
+  public static List<String> readInputLines(String filePath) {
+    try {
+      return Files.readAllLines(resourcePath(filePath));
+    } catch (IOException e) {
+      throw new IllegalArgumentException(READ_FAILED + filePath, e);
     }
   }
 }
