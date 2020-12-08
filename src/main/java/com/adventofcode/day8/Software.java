@@ -5,4 +5,6 @@ public interface Software {
   boolean hasInstruction(int index);
 
   Instruction getInstruction(int index);
+
+  int getNumOfInstructions();
 }

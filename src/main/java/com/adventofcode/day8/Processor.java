@@ -1,5 +1,11 @@
 package com.adventofcode.day8;
 
 public interface Processor {
-  void run(Software software);
+  boolean run(Software software);
+
+  void terminateExecution();
+
+  int getAccumulatorValue();
+
+  void addListener(ProcessorEventListener listener);
 }

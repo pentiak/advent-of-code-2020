@@ -1,4 +1,14 @@
 package com.adventofcode.day8;
 
-public interface Instruction {
+import lombok.Builder;
+import lombok.Getter;
+
+@Builder(toBuilder = true)
+public class Instruction {
+
+  @Getter
+  private final String mnemonic;
+
+  @Getter
+  private final int argument;
 }
