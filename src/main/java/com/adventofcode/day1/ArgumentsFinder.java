@@ -1,67 +1,67 @@
 package com.adventofcode.day1;
 
+import it.unimi.dsi.fastutil.longs.*;
 import lombok.extern.log4j.Log4j2;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.List;
 
 @Log4j2
 public class ArgumentsFinder {
 
-  private final List<String> inputLines;
-
-  public ArgumentsFinder(Path inputFile) {
-    try {
-      inputLines = List.copyOf(Files.readAllLines(inputFile));
-    } catch (IOException e) {
-      throw new IllegalArgumentException("Invalid input file", e);
-    }
+  private ArgumentsFinder() {
   }
 
-  public List<Integer> findSumOfTwoArguments(int desiredSum) {
-    int[] values = inputLines.stream().mapToInt(Integer::parseInt).sorted().toArray();
+  public static LongList findSumOfTwoArguments(LongCollection input, long desiredSum) {
+    LongList workingCopy = new LongArrayList(input);
+    workingCopy.sort(LongComparators.NATURAL_COMPARATOR);
     int startIndex = 0;
-    int endIndex = values.length - 1;
+    int endIndex = workingCopy.size() - 1;
     int compares = 0;
-    int sum = values[startIndex] + values[endIndex];
+    long sum = workingCopy.getLong(startIndex) + workingCopy.getLong(endIndex);
 
-    while (startIndex < values.length - 1) {
+    while (startIndex < endIndex) {
+      compares++;
       if (sum > desiredSum) {
-        while (sum > desiredSum) {
+        while (sum > desiredSum && endIndex > startIndex + 1) {
+          compares++;
           endIndex--;
-          sum = values[startIndex] + values[endIndex];
+          sum = workingCopy.getLong(startIndex) + workingCopy.getLong(endIndex);
         }
       } else if (sum < desiredSum) {
-        while (sum < desiredSum) {
+        while (sum < desiredSum && endIndex < workingCopy.size() - 2) {
+          compares++;
           endIndex++;
-          sum = values[startIndex] + values[endIndex];
+          sum = workingCopy.getLong(startIndex) + workingCopy.getLong(endIndex);
         }
-      } else {
+      }
+
+      if (sum == desiredSum) {
         break;
       }
-      compares++;
+
       startIndex++;
-      sum = values[startIndex] + values[endIndex];
+      sum = workingCopy.getLong(startIndex) + workingCopy.getLong(endIndex);
     }
     log.info("Compares2: " + compares);
-    return List.of(values[startIndex], values[endIndex]);
+    if (sum == desiredSum) {
+      return LongList.of(workingCopy.getLong(startIndex), workingCopy.getLong(endIndex));
+    } else {
+      return LongLists.EMPTY_LIST;
+    }
   }
 
-  public List<Integer> findSumOfThreeArguments(int desiredSum) {
-    int[] values = inputLines.stream().mapToInt(Integer::parseInt).sorted().toArray();
-    int sum;
+  public static LongList findSumOfThreeArguments(LongCollection input, long desiredSum) {
+    LongList workingCopy = new LongArrayList(input);
+    workingCopy.sort(LongComparators.NATURAL_COMPARATOR);
+    long sum;
     int i;
     int j = 0;
     int k = 0;
     int compares = 0;
 
     outer:
-    for (i = 0; i < values.length - 3; i++) {
-      for (j = i + 1; j < values.length - 2; j++) {
-        for (k = j + 1; k < values.length - 1; k++) {
-          sum = values[i] + values[j] + values[k];
+    for (i = 0; i < workingCopy.size() - 3; i++) {
+      for (j = i + 1; j < workingCopy.size() - 2; j++) {
+        for (k = j + 1; k < workingCopy.size() - 1; k++) {
+          sum = workingCopy.getLong(i) + workingCopy.getLong(j) + workingCopy.getLong(k);
           compares++;
           if (sum > desiredSum) {
             break;
@@ -73,7 +73,25 @@ public class ArgumentsFinder {
       }
     }
     log.info("Compares3: " + compares);
-    return List.of(values[i], values[j], values[k]);
+    return LongList.of(workingCopy.getLong(i), workingCopy.getLong(j), workingCopy.getLong(k));
+  }
+
+  public static LongList findSummingSublist(LongCollection input, long desiredSum) {
+    LongList workingCopy = new LongArrayList(input);
+    int startIndex = 0;
+    int endIndex = 1;
+    long sum = workingCopy.getLong(startIndex);
+
+    for (; startIndex < workingCopy.size(); startIndex++) {
+      for (; sum < desiredSum && endIndex < workingCopy.size(); endIndex++) {
+        sum += workingCopy.getLong(endIndex);
+      }
+      if (sum == desiredSum) {
+        return workingCopy.subList(startIndex, endIndex);
+      }
+      sum -= workingCopy.getLong(startIndex);
+    }
+    return LongLists.EMPTY_LIST;
   }
 
 }

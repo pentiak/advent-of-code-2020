@@ -1,5 +1,9 @@
 package com.adventofcode.tools;
 
+import it.unimi.dsi.fastutil.ints.IntArrayList;
+import it.unimi.dsi.fastutil.ints.IntList;
+import it.unimi.dsi.fastutil.longs.LongArrayList;
+import it.unimi.dsi.fastutil.longs.LongList;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -48,5 +52,17 @@ public class InputLoader {
     } catch (IOException e) {
       throw new IllegalArgumentException(READ_FAILED + filePath, e);
     }
+  }
+
+  public static IntList inputIntList(String filePath) {
+    return inputLines(filePath)
+        .mapToInt(Integer::parseInt)
+        .collect(IntArrayList::new, IntArrayList::add, IntArrayList::addAll);
+  }
+
+  public static LongList inputLongList(String filePath) {
+    return inputLines(filePath)
+        .mapToLong(Long::parseLong)
+        .collect(LongArrayList::new, LongArrayList::add, LongArrayList::addAll);
   }
 }
