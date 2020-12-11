@@ -1,5 +1,7 @@
 package com.adventofcode.day3;
 
+import com.adventofcode.grid.CharacterGrid;
+
 import java.util.StringJoiner;
 
 public class SlopeTraverser {

@@ -1,6 +1,8 @@
 package com.adventofcode.day3;
 
-import com.adventofcode.tools.InputLoader;
+import com.adventofcode.grid.ArrayCharacterGrid;
+import com.adventofcode.grid.CharacterGrid;
+import com.adventofcode.grid.HorizontallyRepeatingGrid;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.List;
@@ -9,7 +11,7 @@ import java.util.List;
 public class Day3 {
 
   public static void main(String[] args) {
-    CharacterGrid grid = new HorizontallyRepeatingGrid(new FileSourcedGrid(InputLoader.resourcePath("day3/input.txt")));
+    CharacterGrid grid = new HorizontallyRepeatingGrid(new ArrayCharacterGrid("day3/input.txt"));
 
     List<SlopeTraverser> traversers = List.of(
         new SlopeTraverser(grid, 1, 1),

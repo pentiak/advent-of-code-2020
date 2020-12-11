@@ -1,4 +1,4 @@
-package com.adventofcode.day3;
+package com.adventofcode.grid;
 
 public interface CharacterGrid {
 
