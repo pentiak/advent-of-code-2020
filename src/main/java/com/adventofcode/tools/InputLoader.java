@@ -14,6 +14,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -36,6 +37,10 @@ public class InputLoader {
     } catch (IOException e) {
       throw new IllegalArgumentException(READ_FAILED + filePath, e);
     }
+  }
+
+  public static List<String> readInputSplitByBlankLine(String filePath) {
+    return inputSplitByBlankLine(filePath).collect(Collectors.toList());
   }
 
   public static Stream<String> inputLines(String filePath) {
