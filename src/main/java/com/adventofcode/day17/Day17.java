@@ -9,25 +9,40 @@ import java.util.List;
 public class Day17 {
 
   public static void main(String[] args) {
-    CharacterGrid3d grid = new CharacterGrid3d('.');
+    CoordinateGrid grid = new CoordinateGrid('.');
     initializeGrid(grid, "day17/input.txt");
 
     EnergySource energySource = new EnergySource(grid);
-    log.info("Before any cycles:\n\n{}", grid.printGrid());
     for (int i = 1; i <= 6; i++) {
       energySource.cycle();
-      log.info("After {} cycle:\n\n{}", i, grid.printGrid());
     }
+    log.info("Active cubes 3-dim: {}", grid.countValues('#'));
 
-    log.info("Active cubes: {}", grid.countValues('#'));
+    CoordinateGrid grid4d = new CoordinateGrid('.');
+    initializeGrid4d(grid4d, "day17/input.txt");
+    EnergySource energySource4d = new EnergySource(grid4d);
+    for (int i = 1; i <= 6; i++) {
+      energySource4d.cycle();
+    }
+    log.info("Active cubes 4-dim: {}", grid4d.countValues('#'));
   }
 
-  private static void initializeGrid(CharacterGrid3d grid, String inputFile) {
+  private static void initializeGrid4d(CoordinateGrid grid, String inputFile) {
     List<String> lines = InputLoader.readInputLines(inputFile);
     for (int y = 0; y < lines.size(); y++) {
       char[] values = lines.get(y).toCharArray();
       for (int x = 0; x < values.length; x++) {
-        grid.setValue(Coord3d.of(x, y, 0), values[x]);
+        grid.setValue(Coordinate.of(x, y, 0, 0), values[x]);
+      }
+    }
+  }
+
+  private static void initializeGrid(CoordinateGrid grid, String inputFile) {
+    List<String> lines = InputLoader.readInputLines(inputFile);
+    for (int y = 0; y < lines.size(); y++) {
+      char[] values = lines.get(y).toCharArray();
+      for (int x = 0; x < values.length; x++) {
+        grid.setValue(Coordinate.of(x, y, 0), values[x]);
       }
     }
   }

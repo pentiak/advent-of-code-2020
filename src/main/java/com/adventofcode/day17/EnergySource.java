@@ -9,23 +9,23 @@ import java.util.Set;
 
 public class EnergySource {
 
-  private final CharacterGrid3d grid;
+  private final CoordinateGrid grid;
 
-  public EnergySource(CharacterGrid3d grid) {
+  public EnergySource(CoordinateGrid grid) {
     this.grid = grid;
   }
 
 
   public void cycle() {
-    List<Coord3d> coordinatesInMap = grid.getAllCoordinates();
-    Set<Coord3d> coordsToCheck = new HashSet<>(coordinatesInMap);
-    for (Coord3d coord : coordinatesInMap) {
+    List<Coordinate> coordinatesInMap = grid.getAllCoordinates();
+    Set<Coordinate> coordsToCheck = new HashSet<>(coordinatesInMap);
+    for (Coordinate coord : coordinatesInMap) {
       coordsToCheck.addAll(coord.getAdjacentCoords());
     }
 
-    Object2CharMap<Coord3d> map = new Object2CharOpenHashMap<>();
+    Object2CharMap<Coordinate> map = new Object2CharOpenHashMap<>();
 
-    for (Coord3d coord : coordsToCheck) {
+    for (Coordinate coord : coordsToCheck) {
       char newValue = determineNewValue(coord);
       map.put(coord, newValue);
     }
@@ -34,7 +34,7 @@ public class EnergySource {
 
   }
 
-  private char determineNewValue(Coord3d coord) {
+  private char determineNewValue(Coordinate coord) {
     char currentValue = grid.valueAt(coord);
     long activeNeighbours = coord.getAdjacentCoords().stream().filter(c -> grid.valueAt(c) == '#').count();
 
