@@ -1,0 +1,74 @@
+/* calculator.jj Adding up numbers */
+options {
+	STATIC = false;
+}
+
+PARSER_BEGIN(Calculator)
+
+package com.adventofcode.day18;
+
+public class Calculator {
+
+}
+
+PARSER_END(Calculator)
+
+SKIP : { " " }
+TOKEN : { < EOL : "\r\n" | "\r" | "\n" > }
+TOKEN : { < PLUS : "+" > }
+TOKEN : { < TIMES : "*" > }
+TOKEN : { < OPAR : "(" > }
+TOKEN : { < CPAR : ")" > }
+TOKEN : { < NUMBER : <DIGITS> > }
+TOKEN : { < #DIGITS : (["0"-"9"])+ > }
+
+long calculate() :
+{
+  Token t;
+  long calculatedValue;
+  long sum = 0;
+}
+{
+    (
+      calculatedValue = expression()
+      <EOL>
+      { sum+= calculatedValue; }
+    )*
+    <EOF>
+    { return sum; }
+}
+
+private long expression() :
+{
+  long value;
+  long number;
+}
+{
+    value = primary()
+    (
+        <PLUS>
+        number = primary()
+        { value+= number; }
+        |
+        <TIMES>
+        number = primary()
+        { value*= number; }
+    )*
+    { return value; }
+}
+
+private long primary() :
+{
+  Token t;
+  long exprResult;
+}
+{
+    t = <NUMBER>
+    { return Long.parseLong(t.image); }
+    |
+    <OPAR>
+    exprResult = expression()
+    <CPAR>
+    { return exprResult; }
+
+}
