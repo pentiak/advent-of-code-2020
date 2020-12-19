@@ -1,6 +1,6 @@
 package com.adventofcode.day1;
 
-import com.adventofcode.tools.InputLoader;
+import com.adventofcode.utils.InputUtils;
 import it.unimi.dsi.fastutil.longs.LongList;
 import lombok.extern.log4j.Log4j2;
 
@@ -8,7 +8,7 @@ import lombok.extern.log4j.Log4j2;
 public class Day1 {
 
   public static void main(String[] args) {
-    LongList input = InputLoader.inputLongList("day1/input.txt");
+    LongList input = InputUtils.inputLongList("day1/input.txt");
 
     LongList arguments2 = ArgumentsFinder.findSumOfTwoArguments(input, 2020);
     log.info(arguments2);

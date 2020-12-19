@@ -1,6 +1,6 @@
 package com.adventofcode.day16;
 
-import com.adventofcode.tools.InputLoader;
+import com.adventofcode.utils.InputUtils;
 import com.google.common.collect.Sets;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
@@ -26,7 +26,7 @@ public class TicketDecipher {
   public TicketDecipher(String inputFile) {
     inputSection = InputSection.VALIDATORS;
 
-    InputLoader.inputLines(inputFile).forEach(this::parseLine);
+    InputUtils.inputLines(inputFile).forEach(this::parseLine);
 
     initPossibleFieldNamesList();
   }

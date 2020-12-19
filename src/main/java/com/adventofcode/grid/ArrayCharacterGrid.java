@@ -1,6 +1,6 @@
 package com.adventofcode.grid;
 
-import com.adventofcode.tools.InputLoader;
+import com.adventofcode.utils.InputUtils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,7 +17,7 @@ public class ArrayCharacterGrid implements CharacterGrid {
   }
 
   public ArrayCharacterGrid(String inputFile) {
-    List<String> lines = InputLoader.readInputLines(inputFile);
+    List<String> lines = InputUtils.readInputLines(inputFile);
     grid = new char[lines.size()][];
     for (int i = 0; i < lines.size(); i++) {
       grid[i] = lines.get(i).toCharArray();

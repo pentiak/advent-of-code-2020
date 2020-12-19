@@ -1,6 +1,6 @@
 package com.adventofcode.day13;
 
-import com.adventofcode.tools.InputLoader;
+import com.adventofcode.utils.InputUtils;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
 import it.unimi.dsi.fastutil.longs.Long2LongLinkedOpenHashMap;
@@ -19,7 +19,7 @@ public class Day13 {
   }
 
   private static void part1() {
-    List<String> lines = InputLoader.readInputLines("day13/input.txt");
+    List<String> lines = InputUtils.readInputLines("day13/input.txt");
     int arriveTime = Integer.parseInt(lines.get(0));
     String[] split = lines.get(1).split(",");
     IntList workingBuses = Arrays.stream(split)
@@ -47,7 +47,7 @@ public class Day13 {
   }
 
   private static void part2() {
-    List<String> lines = InputLoader.readInputLines("day13/input.txt");
+    List<String> lines = InputUtils.readInputLines("day13/input.txt");
     String[] split = lines.get(1).split(",");
     Long2LongLinkedOpenHashMap modulos = new Long2LongLinkedOpenHashMap();
     for (int i = 0; i < split.length; i++) {

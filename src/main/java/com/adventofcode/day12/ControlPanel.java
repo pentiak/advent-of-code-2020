@@ -1,6 +1,6 @@
 package com.adventofcode.day12;
 
-import com.adventofcode.tools.InputLoader;
+import com.adventofcode.utils.InputUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +22,7 @@ public abstract class ControlPanel<T> {
   }
 
   public void runInstructions(String inputFile) {
-    InputLoader.inputLines(inputFile).forEach(this::runInstruction);
+    InputUtils.inputLines(inputFile).forEach(this::runInstruction);
   }
 
   public void runInstruction(String instruction) {

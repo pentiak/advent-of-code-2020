@@ -1,6 +1,6 @@
 package com.adventofcode.day4;
 
-import com.adventofcode.tools.InputLoader;
+import com.adventofcode.utils.InputUtils;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class Day4 {
 
   public static void main(String[] args) {
-    List<Document> documents = InputLoader.inputSplitByBlankLine("day4/input.txt")
+    List<Document> documents = InputUtils.inputSplitByBlankLine("day4/input.txt")
         .map(Document::new)
         .collect(Collectors.toList());
 

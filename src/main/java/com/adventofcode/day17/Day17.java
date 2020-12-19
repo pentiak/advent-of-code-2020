@@ -1,6 +1,6 @@
 package com.adventofcode.day17;
 
-import com.adventofcode.tools.InputLoader;
+import com.adventofcode.utils.InputUtils;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.List;
@@ -28,7 +28,7 @@ public class Day17 {
   }
 
   private static void initializeGrid4d(CoordinateGrid grid, String inputFile) {
-    List<String> lines = InputLoader.readInputLines(inputFile);
+    List<String> lines = InputUtils.readInputLines(inputFile);
     for (int y = 0; y < lines.size(); y++) {
       char[] values = lines.get(y).toCharArray();
       for (int x = 0; x < values.length; x++) {
@@ -38,7 +38,7 @@ public class Day17 {
   }
 
   private static void initializeGrid(CoordinateGrid grid, String inputFile) {
-    List<String> lines = InputLoader.readInputLines(inputFile);
+    List<String> lines = InputUtils.readInputLines(inputFile);
     for (int y = 0; y < lines.size(); y++) {
       char[] values = lines.get(y).toCharArray();
       for (int x = 0; x < values.length; x++) {

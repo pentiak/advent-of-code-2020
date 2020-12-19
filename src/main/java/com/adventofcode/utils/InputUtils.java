@@ -1,4 +1,4 @@
-package com.adventofcode.tools;
+package com.adventofcode.utils;
 
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
@@ -18,14 +18,14 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class InputLoader {
+public class InputUtils {
 
   private static final String READ_FAILED = "Can't read file: ";
   private static final Pattern INPUT_SPLIT = Pattern.compile("\\n\\n");
 
   public static Path resourcePath(String filePath) {
     try {
-      return Paths.get(Objects.requireNonNull(InputLoader.class.getClassLoader().getResource(filePath)).toURI());
+      return Paths.get(Objects.requireNonNull(InputUtils.class.getClassLoader().getResource(filePath)).toURI());
     } catch (Exception e) {
       throw new IllegalArgumentException("Invalid filePath: " + filePath, e);
     }

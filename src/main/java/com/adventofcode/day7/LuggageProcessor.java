@@ -1,6 +1,6 @@
 package com.adventofcode.day7;
 
-import com.adventofcode.tools.InputLoader;
+import com.adventofcode.utils.InputUtils;
 import lombok.extern.log4j.Log4j2;
 import org.jgrapht.Graph;
 import org.jgrapht.event.TraversalListenerAdapter;
@@ -29,7 +29,7 @@ public class LuggageProcessor {
   }
 
   private void loadRegulations(String inputFile) {
-    List<String> lines = InputLoader.readInputLines(inputFile);
+    List<String> lines = InputUtils.readInputLines(inputFile);
     for (String line : lines) {
       Matcher matcher = BAG_REGULATION.matcher(line);
       if (matcher.find()) {

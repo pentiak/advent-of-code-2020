@@ -1,6 +1,6 @@
 package com.adventofcode.day5;
 
-import com.adventofcode.tools.InputLoader;
+import com.adventofcode.utils.InputUtils;
 import it.unimi.dsi.fastutil.ints.IntBidirectionalIterator;
 import it.unimi.dsi.fastutil.ints.IntRBTreeSet;
 import it.unimi.dsi.fastutil.ints.IntSortedSet;
@@ -14,7 +14,7 @@ public class Day5 {
   public static void main(String[] args) throws Exception {
     BoardingPassDecoder decoder = new BoardingPassDecoder();
 
-    try (BufferedReader reader = Files.newBufferedReader(InputLoader.resourcePath("day5/input.txt"))) {
+    try (BufferedReader reader = Files.newBufferedReader(InputUtils.resourcePath("day5/input.txt"))) {
 
       String line;
       IntSortedSet ids = new IntRBTreeSet();

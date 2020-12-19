@@ -1,6 +1,6 @@
 package com.adventofcode.day14;
 
-import com.adventofcode.tools.InputLoader;
+import com.adventofcode.utils.InputUtils;
 
 import java.math.BigInteger;
 import java.util.Map;
@@ -18,7 +18,7 @@ public abstract class Decoder {
   }
 
   public void run(String inputFile) {
-    InputLoader.inputLines(inputFile).forEach(this::runLine);
+    InputUtils.inputLines(inputFile).forEach(this::runLine);
   }
 
   public void runLine(String line) {
