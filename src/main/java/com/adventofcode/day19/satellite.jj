@@ -1,0 +1,98 @@
+options {
+	STATIC = false;
+}
+
+PARSER_BEGIN(SatelliteDecoder)
+
+package com.adventofcode.day19;
+
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
+import it.unimi.dsi.fastutil.ints.IntList;
+
+import java.util.List;
+import java.util.ArrayList;
+
+class SatelliteDecoder {
+  private Int2ObjectMap<RegularExpression> registry = new Int2ObjectOpenHashMap<RegularExpression>();
+}
+
+PARSER_END(SatelliteDecoder)
+
+SKIP : { " " }
+TOKEN : { < EOL : "\r\n" | "\r" | "\n" > }
+TOKEN : { < COLON : ":" > }
+TOKEN : { < PIPE : "|" > }
+TOKEN : { < QUOTE : "\"" > }
+TOKEN : { < NUMBER : <DIGITS> > }
+TOKEN : { < WORD : <CHARS> > }
+TOKEN : { < #DIGITS : (["0"-"9"])+ > }
+TOKEN : { < #CHARS : (["a"-"z","A"-"Z"])+ > }
+
+Int2ObjectMap<RegularExpression> getRegistry():
+{
+ RegularExpression expression;
+ Token expressionKey;
+}
+{
+    (
+        expressionKey = <NUMBER>
+        <COLON>
+        expression = expression()
+        (
+        <EOL>
+        { registry.put(Integer.parseInt(expressionKey.image), expression); }
+        |
+        <EOF>
+        {
+          registry.put(Integer.parseInt(expressionKey.image), expression);
+          return registry;
+        }
+        )
+    )*
+}
+
+private RegularExpression expression() :
+{
+  RegularExpression exp;
+  List<RegularExpression> expressions = new ArrayList<RegularExpression>();
+}
+{
+    exp = expression1()
+    { expressions.add(exp); }
+    (
+        <PIPE>
+        exp = expression1()
+        { expressions.add(exp); }
+    )*
+    {
+      if(expressions.size()==1){
+        return expressions.get(0);
+      }else{
+        return new OrExpression(expressions);
+      }
+   }
+}
+
+private RegularExpression expression1() :
+{
+ Token literal;
+ Token ref;
+ IntList references = new IntArrayList();
+}
+{
+
+    <QUOTE>
+    literal = <WORD>
+    <QUOTE>
+    { return new LiteralExpression(literal.image); }
+    |
+    ref = <NUMBER>
+    { references.add(Integer.parseInt(ref.image)); }
+    (
+       ref = <NUMBER>
+       { references.add(Integer.parseInt(ref.image)); }
+    )*
+    { return new ReferencingExpression(registry, references); }
+}
