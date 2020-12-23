@@ -70,4 +70,13 @@ public class InputUtils {
         .mapToLong(Long::parseLong)
         .collect(LongArrayList::new, LongArrayList::add, LongArrayList::addAll);
   }
+
+  public static char[][] inputCharArray(String filePath) {
+    List<String> lines = readInputLines(filePath);
+    char[][] result = new char[lines.size()][];
+    for (int i = 0; i < lines.size(); i++) {
+      result[i] = lines.get(i).toCharArray();
+    }
+    return result;
+  }
 }
