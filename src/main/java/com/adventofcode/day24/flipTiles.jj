@@ -1,0 +1,96 @@
+options {
+	STATIC = false;
+}
+
+PARSER_BEGIN(FlipTilesRegistry)
+
+package com.adventofcode.day24;
+
+class FlipTilesRegistry {
+  private Floor floor;
+
+  public void setFloor(Floor floor){
+    this.floor = floor;
+  }
+
+}
+
+PARSER_END(FlipTilesRegistry)
+
+TOKEN : { < EOL : "\r\n" | "\r" | "\n" > }
+TOKEN : { < E : "e" > }
+TOKEN : { < SE : "se" > }
+TOKEN : { < SW : "sw" > }
+TOKEN : { < W : "w" > }
+TOKEN : { < NW : "nw" > }
+TOKEN : { < NE : "ne" > }
+
+
+void flipTiles():
+{
+
+}
+{
+    (
+        line()
+        (
+        <EOL>
+        |
+        <EOF>
+        {
+          return;
+        }
+        )
+    )*
+}
+
+private void line() :
+{
+ int x;
+ int y;
+}
+{
+    {
+       x = 0;
+       y = 0;
+    }
+    (
+        <E>
+        {
+          x+=2;
+        }
+        |
+        <SE>
+        {
+          y+=2;
+          x+=1;
+        }
+        |
+        <SW>
+        {
+          y+=2;
+          x-=1;
+        }
+        |
+        <W>
+        {
+          x-=2;
+        }
+        |
+        <NW>
+        {
+          y-=2;
+          x-=1;
+        }
+        |
+        <NE>
+        {
+          y-=2;
+          x+=1;
+        }
+    )*
+    {
+      floor.flipTile(x, y);
+    }
+}
+
