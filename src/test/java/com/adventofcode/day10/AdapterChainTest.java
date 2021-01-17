@@ -25,18 +25,4 @@ class AdapterChainTest {
     assertEquals(0, chain.getJoltDifferences(2));
     assertEquals(5, chain.getJoltDifferences(3));
   }
-
-  @Test
-  void possibleOmissions() {
-    AdapterChain chain = new AdapterChain(InputUtils.inputIntList("day10/input2.txt"));
-    assertEquals(8, chain.getPossibleArrangements());
-    assertEquals(IntSet.of(5, 6, 11), chain.getPossibleOmissions(3));
-  }
-
-  @Test
-  void possibleOmissions2() {
-    AdapterChain chain = new AdapterChain(InputUtils.inputIntList("day10/input3.txt"));
-
-    assertEquals(19208, chain.getPossibleArrangements());
-  }
 }

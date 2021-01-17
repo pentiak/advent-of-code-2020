@@ -4,6 +4,7 @@ import it.unimi.dsi.fastutil.ints.*;
 
 public class AdapterChain {
   private final IntList input;
+  private Int2LongMap memo;
 
   public AdapterChain(IntList input) {
     this(input, true);
@@ -29,21 +30,37 @@ public class AdapterChain {
     return count;
   }
 
-  public IntSet getPossibleOmissions(int delta) {
-    IntSet omissions = new IntOpenHashSet();
-    for (int i = 0; i < input.size() - (delta - 1); i++) {
-      int currentJolt = input.getInt(i);
-      int maxJolt = currentJolt + delta;
-      int j = i + (delta - 1);
-      while (input.getInt(j) <= maxJolt) {
-        omissions.add(input.getInt(j - 1));
-        j++;
-      }
-    }
-    return omissions;
+
+  public long getAllPossibleConnections() {
+    memo = new Int2LongOpenHashMap(input.size() - 1);
+    return calculatePossibleConnectionTo(input.size() - 1);
   }
 
-  public int getPossibleArrangements() {
-    return -1;
+  private long calculatePossibleConnectionTo(int adapterIndex) {
+    if (adapterIndex < 0) {
+      return 0;
+    }
+    if (adapterIndex == 0) {
+      return 1;
+    }
+    int adapter = input.getInt(adapterIndex);
+    long cachedValue = memo.get(adapter);
+    if (cachedValue != 0) {
+      return cachedValue;
+    }
+
+    long sum = 0;
+    for (int previousAdapterIndex = adapterIndex - 1;
+         previousAdapterIndex >= adapterIndex - 3 && previousAdapterIndex >= 0;
+         previousAdapterIndex--) {
+      int previousAdapter = input.getInt(previousAdapterIndex);
+      if (previousAdapter < adapter - 3) {
+        break;
+      }
+
+      sum += calculatePossibleConnectionTo(previousAdapterIndex);
+    }
+    memo.put(adapter, sum);
+    return sum;
   }
 }
