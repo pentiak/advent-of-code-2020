@@ -5,6 +5,7 @@ import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
 import lombok.extern.log4j.Log4j2;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -167,7 +168,7 @@ public class JurrasicJigsaw {
 
     int waterDots = ArrayUtils.countCharacters(puzzleChars, '#');
 
-
+    log.info("Flipping whole puzzle to find monsters");
     int foundMonsters = 0;
     for (int flips = 0; flips < 2; flips++) {
       for (int rotate = 0; rotate < 3; rotate++) {
@@ -183,7 +184,7 @@ public class JurrasicJigsaw {
     }
 
     int monsterDots = template.getDots();
-    int waterRoughness = ArrayUtils.countCharacters(puzzleChars, '#');
+    int waterRoughness = waterDots - foundMonsters * monsterDots;
 
     log.info("Water dots: {}", waterDots);
     log.info("Monster dots: {}", monsterDots);
@@ -204,9 +205,8 @@ public class JurrasicJigsaw {
         }
         char[][] tile = puzzle[puzzleRow][puzzleCol].getContent();
         for (int tileRow = 0; tileRow < tile.length; tileRow++) {
-          for (int tileCol = 0; tileCol < tile[0].length; tileCol++) {
-            puzzleArray[puzzleRow * tileRows + tileRow][puzzleCol * tileCols + tileCol] = tile[tileRow][tileCol];
-          }
+          System.arraycopy(tile[tileRow], 0, puzzleArray[puzzleRow * tileRows + tileRow], puzzleCol * tileCols,
+              tile[0].length);
         }
       }
     }
@@ -219,5 +219,14 @@ public class JurrasicJigsaw {
         tile.trimEdges();
       }
     }
+  }
+
+  public List<Tile> getCornerTiles() {
+    List<Tile> tiles = new ArrayList<>(4);
+    tiles.add(puzzle[0][0]);
+    tiles.add(puzzle[0][puzzle[0].length - 1]);
+    tiles.add(puzzle[puzzle.length - 1][0]);
+    tiles.add(puzzle[puzzle.length - 1][puzzle[puzzle.length - 1].length - 1]);
+    return tiles;
   }
 }
